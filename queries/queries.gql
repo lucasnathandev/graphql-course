@@ -1,0 +1,27 @@
+query GET_USER {
+  user : {
+    id
+    name
+  }
+}
+
+query GET_USERS {
+  users : {
+    id
+    name
+  }
+}
+
+query GET_POST {
+  post: {
+    id
+    title
+  }
+}
+
+query GET_POSTS {
+  posts: {
+    id
+    title
+  }
+}
