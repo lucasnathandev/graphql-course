@@ -1,0 +1,48 @@
+query GET_POSTS_WITH_TRIVIAL_R {
+  posts {
+    id
+    title
+    # this below is a trivial resolver property created in the Post resolver
+    unixTimestamp
+  }
+}
+
+query GET_POSTS_WITH_ALIASES {
+  post_with_alias: post(id: "342") {
+    id
+    title
+  }
+  post_with_alias2: post(id: "704") {
+    id
+    post_id: id
+    title
+  }
+  post(id: "860") {
+    id
+    title
+  }
+}
+
+# Query fragments
+# Query fragments help to avoid hardcoded code repeat, is like an variable os fields we need to use in some query
+# Cannot declare query fragments and do not use it. Since declared it must be used, otherwise we got error
+fragment post on Post {
+  id
+  title
+  body
+  indexRef
+  createdAt
+  unixTimestamp
+}
+
+query GET_POSTS_WITH_QUERY_FRAG {
+  post1: post(id: "860") {
+    ...post
+  }
+  post2: post(id: "15") {
+    ...post
+  }
+  post3: post(id: "704") {
+    ...post
+  }
+}

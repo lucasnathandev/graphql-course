@@ -13,4 +13,11 @@ export const postResolvers = {
     post,
     posts,
   },
+  // Trivial resolvers
+  Post: {
+    unixTimestamp: ({ createdAt }) => {
+      const timestamp = new Date(createdAt).getTime() / 1000;
+      return Math.floor(timestamp);
+    },
+  },
 };
