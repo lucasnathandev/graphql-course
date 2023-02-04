@@ -1,0 +1,10 @@
+# Queries with variable (query variable)
+# These queries are dynamic
+
+query GET_USER_DINAMICALLY($id: ID! = "812") {
+  user(id: $id) {
+    id
+    firstName
+    lastName
+  }
+}

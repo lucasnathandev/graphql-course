@@ -1,26 +1,12 @@
-const post = () => ({
-  id: '123',
-  title: 'Example post',
-});
+const post = async (_, { id }, { api }) => {
+  const post = await api.getPosts(`/${id}`);
+  return post.data;
+};
 
-const posts = () => [
-  {
-    id: '1',
-    title: 'Post 1',
-  },
-  {
-    id: '2',
-    title: 'Post 2',
-  },
-  {
-    id: '3',
-    title: 'Post 3',
-  },
-  {
-    id: '4',
-    title: 'Post 4',
-  },
-];
+const posts = async (_, __, { api }) => {
+  const posts = await api.getPosts();
+  return posts.data;
+};
 
 export const postResolvers = {
   Query: {
