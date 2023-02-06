@@ -6,11 +6,25 @@ export const postTypeDefs = gql`
     posts(input: ApiFiltersInput): [Post!]!
   }
 
-  union PostResult = PostNotFoundError | Post
+  union PostResult = PostNotFoundError | PostTimeoutError | Post
 
-  type PostNotFoundError {
+  # Interfaces force to types which implements it to have the properties
+  # defined in the interface
+  interface PostError {
     statusCode: Int!
     message: String!
+  }
+
+  type PostNotFoundError implements PostError {
+    statusCode: Int!
+    message: String!
+    postId: String!
+  }
+
+  type PostTimeoutError implements PostError {
+    statusCode: Int!
+    message: String!
+    timeout: Int!
   }
 
   type Post {
