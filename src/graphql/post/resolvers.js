@@ -3,25 +3,7 @@ const post = async (_, { id }, { api }) => {
     const post = await api.getPosts(`/${id}`);
     return post.data;
   } catch ({ response }) {
-    if (Math.random() > 0.5) {
-      return {
-        statusCode: 500,
-        message: 'Post Timeout',
-        timeout: 123,
-      };
-    }
-
-    if (!response?.data.id) {
-      return {
-        statusCode: 404,
-        message: 'Post not found',
-        postId: id,
-      };
-    }
-    return {
-      statusCode: response.status,
-      message: response.statusText,
-    };
+    console.log('');
   }
 };
 
@@ -31,33 +13,19 @@ const posts = async (_, { input }, { api }) => {
   return posts.data;
 };
 
+const user = async (parent, _, { api }) => {
+  return api.userDataLoader.load(parent.userId);
+  // Using dataloader is not needed anymore to use the code below
+  // const user = await api.getUsers(`/${parent.userId}`);
+  // return user.data;
+};
+
 export const postResolvers = {
   Query: {
     post,
     posts,
   },
-  // Trivial resolvers
   Post: {
-    unixTimestamp: ({ createdAt }) => {
-      const timestamp = new Date(createdAt).getTime() / 1000;
-      return Math.floor(timestamp);
-    },
-  },
-  PostResult: {
-    __resolveType: (obj) => {
-      console.log(obj);
-      if (typeof obj.postId !== 'undefined') return 'PostNotFoundError';
-      if (typeof obj.timeout !== 'undefined') return 'PostTimeoutError';
-      if (typeof obj.id !== 'undefined') return 'Post';
-      return null;
-    },
-  },
-  // Resolving interface type
-  PostError: {
-    __resolveType: (obj) => {
-      if (typeof obj.postId !== 'undefined') return 'PostNotFoundError';
-      if (typeof obj.timeout !== 'undefined') return 'PostTimeoutError';
-      return null;
-    },
+    user,
   },
 };

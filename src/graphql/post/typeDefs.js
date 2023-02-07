@@ -2,38 +2,16 @@ import { gql } from 'apollo-server';
 
 export const postTypeDefs = gql`
   extend type Query {
-    post(id: ID!): PostResult!
+    post(id: ID!): Post!
     posts(input: ApiFiltersInput): [Post!]!
-  }
-
-  union PostResult = PostNotFoundError | PostTimeoutError | Post
-
-  # Interfaces force to types which implements it to have the properties
-  # defined in the interface
-  interface PostError {
-    statusCode: Int!
-    message: String!
-  }
-
-  type PostNotFoundError implements PostError {
-    statusCode: Int!
-    message: String!
-    postId: String!
-  }
-
-  type PostTimeoutError implements PostError {
-    statusCode: Int!
-    message: String!
-    timeout: Int!
   }
 
   type Post {
     id: ID!
     title: String!
     body: String!
-    # user: User!
+    user: User!
     indexRef: Int!
     createdAt: String!
-    unixTimestamp: String!
   }
 `;

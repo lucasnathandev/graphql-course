@@ -1,0 +1,58 @@
+query GET_POST_WITH_USER_RELATION($postId: ID!) {
+  post(id: $postId) {
+    id
+    title
+    user {
+      id
+      firstName
+      lastName
+      userName
+      indexRef
+    }
+  }
+}
+
+query GET_POSTS_WITH_USER_RELATION($postId: ID!) {
+  posts(input: { _limit: 20 }) {
+    id
+    user {
+      id
+      firstName
+    }
+  }
+}
+
+query GET_USER_WITH_POSTS_RELATION($userId: ID!) {
+  user(id: $userId) {
+    id
+    posts {
+      id
+      title
+    }
+  }
+}
+
+query GET_USERS_WITH_POSTS_RELATION($userId: ID!) {
+  users {
+    id
+    posts {
+      id
+      title
+    }
+  }
+}
+
+query GET_USER_WITH_BIDIRETIONAL_RELATION($userId: ID!) {
+  user(id: $userId) {
+    id
+    posts {
+      id
+      title
+      user {
+        id
+        indexRef
+        firstName
+      }
+    }
+  }
+}
