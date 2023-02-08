@@ -1,20 +1,15 @@
-const post = async (_, { id }, { api }) => {
-  try {
-    const post = await api.getPosts(`/${id}`);
-    return post.data;
-  } catch ({ response }) {
-    console.log('');
-  }
+const post = async (_, { id }, { dataSources }) => {
+  const post = dataSources.postApi.getPost(id);
+  return post;
 };
 
-const posts = async (_, { input }, { api }) => {
-  const apiFiltersInput = new URLSearchParams(input);
-  const posts = await api.getPosts(`?${apiFiltersInput}`);
-  return posts.data;
+const posts = async (_, { input }, { dataSources }) => {
+  const posts = dataSources.postApi.getPosts(input);
+  return posts;
 };
 
-const user = async (parent, _, { api }) => {
-  return api.userDataLoader.load(parent.userId);
+const user = async (parent, _, { dataSources }) => {
+  return dataSources.userApi.userLoader(parent.userId);
   // Using dataloader is not needed anymore to use the code below
   // const user = await api.getUsers(`/${parent.userId}`);
   // return user.data;

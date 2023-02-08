@@ -1,16 +1,15 @@
-const users = async (_, { input }, { api }) => {
-  const apiFiltersInput = new URLSearchParams(input);
-  const users = await api.getUsers(`?${apiFiltersInput}`);
-  return users.data;
+const users = (_, { input }, { dataSources }) => {
+  const users = dataSources.userApi.getUsers(input);
+  return users;
 };
 
-const user = async (_, { id }, { api }) => {
-  const user = await api.getUsers(`/${id}`);
-  return user.data;
+const user = (_, { id }, { dataSources }) => {
+  const user = dataSources.userApi.getUser(id);
+  return user;
 };
 
-const posts = async (parent, _, { api }) => {
-  return api.postDataLoader.load(parent.id);
+const posts = async (parent, _, { dataSources }) => {
+  return dataSources.postApi.postLoader(parent.id);
 };
 
 export const userResolvers = {
