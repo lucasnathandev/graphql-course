@@ -1,0 +1,69 @@
+# Mutations
+
+mutation CREATE_POST($createPostId: ID!) {
+  createPost(
+    body: { title: "Exemplo1", body: "Corpo do exemplo1", userId: "602" }
+  ) {
+    id
+    title
+    body
+    user {
+      id
+      firstName
+    }
+  }
+}
+
+mutation UPDATE_POST($body: UpdatePostInput!) {
+  updatePost(
+    postId: "iK2Iko0"
+    body: { title: "Alterado", body: "Corpo alterado", userId: "602" }
+  ) {
+    id
+    title
+    body
+    user {
+      id
+      firstName
+      indexRef
+    }
+    indexRef
+  }
+}
+
+mutation DELETE_POST($postId: String) {
+  deletePost(postId: "WHyoTH-")
+}
+
+# User mutations
+
+mutation CREATE_USER {
+  createUser(
+    body: { firstName: "Jonas", lastName: "Soares", userName: "jo_soares" }
+  ) {
+    id
+    firstName
+    lastName
+    userName
+    indexRef
+    createdAt
+  }
+}
+
+mutation UPDATE_USER($userId: ID!) {
+  updateUser(
+    userId: "ZSdeaHw"
+    body: { firstName: "Jonas", lastName: "Soares", userName: "jo_soares" }
+  ) {
+    id
+    firstName
+    lastName
+    userName
+    indexRef
+    createdAt
+  }
+}
+
+mutation DELETE_USER($userId: ID!) {
+  deleteUser(userId: "fN-vbtQ")
+}

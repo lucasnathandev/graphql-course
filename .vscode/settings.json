@@ -1,4 +1,7 @@
 {
   "window.zoomLevel": 0,
-  "prettier.semi": false
+  "prettier.semi": false,
+  "code-runner.executorMap": {
+    "javascript": "node -r dotenv/config -r sucrase/register"
+  }
 }

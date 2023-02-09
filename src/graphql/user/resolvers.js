@@ -8,6 +8,20 @@ const user = (_, { id }, { dataSources }) => {
   return user;
 };
 
+// Mutations
+
+const createUser = async (_, { body }, { dataSources }) => {
+  return dataSources.userApi.createUser(body);
+};
+const updateUser = async (_, { userId, body }, { dataSources }) => {
+  return dataSources.userApi.updateUser(userId, body);
+};
+const deleteUser = async (_, { userId }, { dataSources }) => {
+  return dataSources.userApi.deleteUser(userId);
+};
+
+// Field resolvers
+
 const posts = async (parent, _, { dataSources }) => {
   return dataSources.postApi.postLoader(parent.id);
 };
@@ -19,5 +33,10 @@ export const userResolvers = {
   },
   User: {
     posts,
+  },
+  Mutation: {
+    createUser,
+    updateUser,
+    deleteUser,
   },
 };
